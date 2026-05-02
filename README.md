@@ -1,4 +1,4 @@
-# deadtrees.earth - A Multi-Resolution Aerial Image Dataset for Tree and Mortality Detection
+# deadtrees.earth aerial - A Multi-Resolution Aerial Image Dataset for Tree and Mortality Detection
 
 This repository is the official implementation of [deadtrees.earth - A Multi-Resolution Aerial Image
 Dataset for Tree and Mortality Detection](Arxiv link will be shared soon). 
