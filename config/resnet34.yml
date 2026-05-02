@@ -1,0 +1,9 @@
+# Base configuration file for tree mortality segmentation experiments.
+_base_: 'base.yml'
+
+# Model configuration
+model:
+  type: UNet
+  model_encoder: resnet34 
+  num_classes: 3
+  
