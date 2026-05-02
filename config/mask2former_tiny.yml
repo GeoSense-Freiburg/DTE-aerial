@@ -1,0 +1,8 @@
+# Base configuration file for tree mortality segmentation experiments.
+_base_: 'base.yml'
+
+# Model configuration
+model:
+  weights: facebook/mask2former-swin-tiny-ade-semantic
+  type: Mask2Former
+  num_classes: 3

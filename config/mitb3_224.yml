@@ -1,0 +1,10 @@
+_base_: 'base_segformer.yml'
+
+
+data:
+  crop_size: [224, 224]
+
+# Model configuration
+model:
+  weights: nvidia/segformer-b3-finetuned-ade-512-512
+  type: Segformer

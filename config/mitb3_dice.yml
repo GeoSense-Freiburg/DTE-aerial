@@ -1,0 +1,14 @@
+_base_: 'base_segformer.yml'
+
+# Model configuration
+model:
+  weights: nvidia/segformer-b3-finetuned-ade-512-512
+  type: Segformer
+train:
+  loss:
+    type: tverskyfocal
+    alpha: [0.5, 0.5, 0.5]
+    beta: [0.5, 0.5, 0.5]
+    gamma: [1,1,1]
+    num_classes: ${model.num_classes}
+    logits: true
