@@ -1,0 +1,10 @@
+_base_: 'base.yml'
+model:
+  weights: facebook/dinov2-small
+  type: DINOv2Seg
+  num_classes: 3
+  use_multilayer: false
+  selected_layers: [3, 6, 9, 12]
+  embed_dim: 128
+  patch_size: 14
+

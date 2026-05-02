@@ -1,0 +1,6 @@
+_base_: 'base.yml'
+model:
+  type: DeepLabV3Plus
+  num_classes: 3
+  encoder_name: resnet50
+
