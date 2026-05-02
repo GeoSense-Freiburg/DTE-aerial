@@ -1,0 +1,61 @@
+data:
+  batch_size: 32 #single process batch size for training
+  inference_batch_size: 32 #single process batch size for inference
+  pin_memory: true 
+  num_workers: 24
+  input_dir: '/work/classic/fr_as2114-data_dt_seg'
+  crop_size: [640, 640]
+  image_only_aug: true
+  num_workers_val: 16 
+  data_sampling_seed: 42
+  meta:
+    train: ${data.input_dir}/register/train_v14_audit3_random_split.csv
+    test: ${data.input_dir}/register/val_v14_audit3_random_split.csv
+
+
+
+# Training configuration
+train:
+  start_epoch: 0
+  epochs: 200
+  clip_grad: 5.0
+  weight_decay: 0.01
+  loss:
+    type: tverskyfocal
+    alpha: [0.5, 0.5, 0.3]
+    beta: [0.5, 0.5, 0.7]
+    gamma: [1,1,1]
+    num_classes: ${model.num_classes}
+    logits: true
+
+  lr_scheduler:
+    name: cosine
+
+  optimizer:
+    name: adamw
+    eps: 1e-8
+    base_lr: 1e-4
+    betas: [0.9, 0.99]
+    weight_decay: 0.01
+  min_lr: 1e-5
+  # warmup_lr: 5e-4
+  # warmup_iter: 10000
+  total_cosine_decay_iter: 100000
+
+# Evaluation configuration
+evaluate:
+  eval_freq: 1 #iteration steps
+
+# Checkpoint configuration
+checkpoint:
+  save_freq: 500
+
+model_name: ''
+output: ???
+tag: default #experiment tag for logging and checkpoint naming
+print_freq: 250 #iteration steps to log training metrics
+seed: 0 #random seed for reproducibility
+wandb: true # whether to log training metrics to Weights & Biases
+patience_limit: 2 # number of consecutive evaluations without improvement before stopping training
+patience_threshold : 1e-3 # threshold for determining if an evaluation is considered an improvement
+local_rank: 0 # for distributed training, the rank of the current process (set by torch.distributed.launch)

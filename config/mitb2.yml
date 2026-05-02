@@ -1,0 +1,5 @@
+_base_: 'base_segformer.yml'
+# Model configuration
+model:
+  weights: nvidia/segformer-b2-finetuned-ade-512-512
+  type: Segformer
