@@ -14,7 +14,6 @@ from src.model import build_model
 from src.utils import (
     get_config,
     get_logger,
-    GlobalSegmentationMetrics,
     OrthoSegmentationMetrics,
     set_random_seed,
 )
@@ -67,11 +66,6 @@ def validate(config, data_loader, model, logger):
     # -------------------
     # Metrics
     # -------------------
-    global_metrics = GlobalSegmentationMetrics(
-        num_classes=num_classes,
-        ignore_index=255,
-        device=device
-    )
 
     ortho_metrics = OrthoSegmentationMetrics(
         num_classes=num_classes,
@@ -79,14 +73,8 @@ def validate(config, data_loader, model, logger):
         device=device
     )
 
-    # -------------------
-    # Storage (IMPORTANT)
-    # -------------------
     records = []
 
-    # -------------------
-    # Loop
-    # -------------------
     for idx, samples in enumerate(data_loader):
 
         images = samples["image"].to(device=device, dtype=torch.float32)
@@ -98,9 +86,6 @@ def validate(config, data_loader, model, logger):
 
         logits = model(images)
         preds = torch.softmax(logits, dim=1).argmax(dim=1)
-
-        # -------- global update --------
-        global_metrics.update(preds, masks_true)
 
         # -------- per-sample --------
         for b in range(preds.shape[0]):
@@ -167,16 +152,11 @@ def validate(config, data_loader, model, logger):
     # ============================
     # Compute metrics
     # ============================
-    results = global_metrics.compute()
     ortho_results = ortho_metrics.compute()
 
     # -------------------
     # Aggregate
     # -------------------
-    mean_precision = float(results["precision"].mean())
-    mean_recall = float(results["recall"].mean())
-    mean_f1 = results["mean_f1"]
-    mean_iou = results["mean_iou"]
 
     macro_f1 = ortho_results["macro_f1"]
     macro_precision = ortho_results["macro_precision"]
@@ -184,7 +164,6 @@ def validate(config, data_loader, model, logger):
     macro_iou = ortho_results["macro_iou"]
 
     logger.info(
-        f"GLOBAL → F1: {mean_f1:.4f}, IoU: {mean_iou:.4f} | "
         f"MACRO → F1: {macro_f1:.4f}, IoU: {macro_iou:.4f}"
     )
 
@@ -194,17 +173,10 @@ def validate(config, data_loader, model, logger):
     c = 2
 
     log_dict = {
-        "mean_f1": float(mean_f1),
-        "mean_precision": float(mean_precision),
-        "mean_recall": float(mean_recall),
-        "mean_iou": float(mean_iou),
-
         "macro_f1": float(macro_f1),
         "macro_precision": float(macro_precision),
         "macro_recall": float(macro_recall),
         "macro_iou": float(macro_iou),
-
-        "deadtree_mean_f1": float(results["f1"][c]),
         "deadtree_macro_f1": float(ortho_results["macro_f1_per_class"][c]),
     }
 

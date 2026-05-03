@@ -4,9 +4,9 @@ This repository is the official implementation of [deadtrees.earth - A Multi-Res
 Dataset for Tree and Mortality Detection](Arxiv link will be shared soon). 
 
 
-## Requirements
+## Setup
 
-```setup
+```
 conda create -n treemort python=3.10
 conda activate treemort
 pip install -r requirements.txt
