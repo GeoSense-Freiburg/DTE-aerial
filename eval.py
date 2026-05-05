@@ -158,27 +158,19 @@ def validate(config, data_loader, model, logger):
     # Aggregate
     # -------------------
 
-    macro_f1 = ortho_results["macro_f1"]
-    macro_precision = ortho_results["macro_precision"]
-    macro_recall = ortho_results["macro_recall"]
-    macro_iou = ortho_results["macro_iou"]
 
+   
+    
+    log_dict = {
+        "deadtree_macro_f1": float(ortho_results["macro_f1_per_class"][2]),
+        "forest_cover_macro_f1": float(ortho_results["macro_f1_per_class"][1]),
+    }
+    
     logger.info(
-        f"MACRO → F1: {macro_f1:.4f}, IoU: {macro_iou:.4f}"
+        f"DEADWOOD MACRO → F1: {log_dict['deadtree_macro_f1']:.2f}, "
+        f"FOREST COVER MACRO → F1: {log_dict['forest_cover_macro_f1']:.2f}"
     )
 
-    # -------------------
-    # Deadwood class (c=2)
-    # -------------------
-    c = 2
-
-    log_dict = {
-        "macro_f1": float(macro_f1),
-        "macro_precision": float(macro_precision),
-        "macro_recall": float(macro_recall),
-        "macro_iou": float(macro_iou),
-        "deadtree_macro_f1": float(ortho_results["macro_f1_per_class"][c]),
-    }
 
     return log_dict
 
@@ -205,12 +197,18 @@ def main():
     # -------------------
     # Save JSON
     # -------------------
-    os.makedirs(os.path.dirname(args.output), exist_ok=True) if os.path.dirname(args.output) else None
+    output_path = args.output
 
-    with open(args.output, 'w') as f:
+    # if user passes a directory → append default filename
+    if os.path.isdir(output_path):
+        output_path = os.path.join(output_path, "results.json")
+
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    with open(output_path, 'w') as f:
         json.dump(stats, f, indent=4)
 
-    logger.info(f"Saved results → {args.output}")
+    logger.info(f"Saved results → {output_path}")
 
 
 if __name__ == "__main__":

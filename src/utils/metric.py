@@ -151,8 +151,5 @@ class OrthoSegmentationMetrics:
             "macro_recall_per_class": recalls.mean(dim=0),
             "macro_f1_per_class": f1s.mean(dim=0),
             "macro_iou_per_class": ious.mean(dim=0),
-            "macro_precision": precisions.mean().item(),
-            "macro_recall": recalls.mean().item(),
-            "macro_f1": f1s.mean().item(),
-            "macro_iou": ious.mean().item(),
+            "macro_f1": f1s.mean().item()
         }
