@@ -9,7 +9,7 @@ import datetime
 import warnings
 import torch
 import sys
-sys.path.append('./')  # Ensure src is in path for imports
+sys.path.append('./src')  # Ensure src is in path for imports
 from timm.utils import AverageMeter
 from omegaconf import OmegaConf
 from src.loss import TverskyFocalLoss
