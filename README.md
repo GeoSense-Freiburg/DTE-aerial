@@ -37,10 +37,10 @@ python train.py --cfg ./config/<config_file>.yaml --output <output_path>
 
 ## Evaluation
 
-To evaluate my model on , run:
+To evaluate the model, run:
 
 ```eval
-python eval.py --model-file mymodel.pth -cfg <./config/<config file>> --output <output_path>
+python eval.py --checkpoint <pretrained_model.pth> --cfg <./config/<config file>> --output <output_path>
 ```
 
 
