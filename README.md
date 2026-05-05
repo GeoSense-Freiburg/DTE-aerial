@@ -1,27 +1,38 @@
-# deadtrees.earth aerial - A Multi-Resolution Aerial Image Dataset for Tree and Mortality Detection
 
-This repository is the official implementation of [deadtrees.earth - A Multi-Resolution Aerial Image
-Dataset for Tree and Mortality Detection](Arxiv link will be shared soon). 
+# deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection
 
 
-## Requirements
+This repository is the official implementation of [deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection](Arxiv link will be shared soon). 
 
-```setup
-conda create -n treemort python=3.10
-conda activate treemort
+
+## Setup
+
+```
+# Clone the repository
+git clone github.com/GeoSense-Freiburg/DTE-aerial
+
+# Install and activate the conda environment
+conda create -n dte python=3.10
+conda activate dte
 pip install -r requirements.txt
+
+
 ```
 ## Download Dataset
 We will make our dataset public soon.
 
 ## Training
 
-To train the model(s) in the paper, run this command:
+## 🚀 Training
 
-```train
-python train.py --cfg <./config/<config file>> --output <output_path>
+To train the models described in the paper:
+
+1. Prepare a configuration file (see [`config/`](./config/)) by specifying the path to the dataset.
+2. Run the following command:
+
+```bash
+python train.py --cfg ./config/<config_file>.yaml --output <output_path>
 ```
-
 
 
 ## Evaluation
@@ -67,6 +78,7 @@ Pre-trained Models will be available soon
 
 
 
-## Contributing
+## Citation
 
 License will be available soon. 
+

@@ -8,8 +8,11 @@ class TverskyFocalLoss(nn.Module):
     """
     Tversky Focal Loss for multi-class semantic segmentation.
 
-    This implementation ignores pixels with `ignore_index`
-    by excluding them from TP/FP/FN computation via masking.
+    This implementation ignores pixels with `ignore_index` by masking them out
+    during TP/FP/FN computation.
+
+    Supports per-class weighting via alpha, beta, and gamma.
+    
 
     Args:
         num_classes (int): Number of classes.

@@ -71,11 +71,7 @@ class DeadwoodDataset(torch.utils.data.Dataset):
         )
         
     def __getitem__(self, index):
-        
-
         row = self.df.iloc[index]
-        
-        
         image_path = os.path.join(self.image_dir, str(row["tile_path"]))
         mask_path = os.path.join(self.image_dir, str(row["mask_path"]))
         ortho_id = row["id"]

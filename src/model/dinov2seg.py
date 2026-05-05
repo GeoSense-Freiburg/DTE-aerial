@@ -14,8 +14,8 @@ class DINOv2Seg(nn.Module):
     DINOv2-based segmentation model.
 
     Modes:
-    - last layer only (baseline)
-    - multi-layer fusion (enhanced)
+    - last layer only: use features from the last layer for segmentation.
+    - multi-layer fusion: fuse features from multiple layers for better segmentation performance.
     """
 
     def __init__(
