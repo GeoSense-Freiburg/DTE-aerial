@@ -226,11 +226,6 @@ def validate(config, data_loader, model, criterion):
     logger.info(f"mean precision: {mean_precision}, mean recall: {mean_recall}, mean f1: {mean_f1}, mean iou: {mean_iou}")
     
     macro_f1 = ortho_results["macro_f1"]
-    macro_recall = ortho_results["macro_recall"]
-    macro_precision = ortho_results["macro_precision"]
-    macro_iou = ortho_results["macro_iou"]
-    
-    logger.info(f"macro_f1: {macro_f1}, macro_recall: {macro_recall}, macro_precision: {macro_precision}, macro iou: {macro_iou}")
     
     # For DeadTree class (c=2), log separately, rare and important class for our applicatiom.
     DEADTREE_CLASS_IDX = 2
@@ -255,10 +250,7 @@ def validate(config, data_loader, model, criterion):
             "val/mean_precision": mean_precision,
             "val/mean_recall": mean_recall,
             "val/mean_iou": mean_iou,
-            "val/macro_f1": macro_f1,
-            "val/macro_precision": macro_precision,
-            "val/macro_recall": macro_recall,
-            "val/macro_iou": macro_iou
+            "val/macro_f1": macro_f1
             
         }
         for cls_idx in range(len(results["precision"])):
@@ -283,11 +275,7 @@ def validate(config, data_loader, model, criterion):
         mean_iou,
         loss_meter.avg,
         macro_f1,
-        macro_recall,
-        mean_f1_c2,
-        mean_recall_c2,
         macro_f1_c2,
-        macro_recall_c2
 
     )
 
@@ -386,9 +374,8 @@ def train(cfg):
         if (epoch % cfg.evaluate.eval_freq == 0) or (epoch == cfg.train.epochs - 1) or (epoch == 0):
             (
                 f1, precision, recall, iou, val_loss,
-                macro_f1, macro_recall,
-                mean_f1_c2, mean_recall_c2,
-                macro_f1_c2, macro_recall_c2
+                macro_f1, 
+                macro_f1_c2
             ) = validate(
                             cfg, data_loader_val, model, criterion
                         )
