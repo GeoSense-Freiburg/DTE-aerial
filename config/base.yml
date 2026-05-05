@@ -3,21 +3,21 @@ data:
   inference_batch_size: 32 #single process batch size for inference
   pin_memory: true 
   num_workers: 24
-  input_dir: '/work/classic/fr_as2114-data_dt_seg'
+  input_dir: <Please specify the path to the data directory>
   crop_size: [640, 640]
   image_only_aug: true
   num_workers_val: 16 
   data_sampling_seed: 42
   meta:
-    train: ${data.input_dir}/register/train_v14_audit3_random_split.csv
-    test: ${data.input_dir}/register/val_v14_audit3_random_split.csv
+    train: ${data.input_dir}/<Please specify the path to the training CSV file>
+    test: ${data.input_dir}/<Please specify the path to the validation CSV file>
 
 
 
 # Training configuration
 train:
   start_epoch: 0
-  epochs: 200
+  epochs: 20
   clip_grad: 5.0
   weight_decay: 0.01
   loss:

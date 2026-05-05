@@ -4,7 +4,6 @@ import random
 import numpy as np
 from src.utils import get_logger
 from .dataset import DeadwoodDataset
-from .capped_sampler import CappedSampler
 from .random_sampler import FixedSizeRandomSampler
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
@@ -40,8 +39,8 @@ def collate_fn(batch):
 
 def _parse_dataset(meta):
     '''Parse train/val CSVs into dataframes.
-       Expects meta.train and meta.test to be paths to CSV files with columns 'ortho_id',
-      'image_path', 'mask_path', and optionally stratification columns for sampling.
+       Expects meta.train and meta.test to be paths to CSV files with columns 'id',
+      'image_path', 'mask_path'.
     '''
     train_df = pd.read_csv(meta.train)
     val_df   = pd.read_csv(meta.test)
@@ -59,23 +58,14 @@ def _build_dataset(config):
 
 def _build_sampler(config, dataset_train, dataset_val):
     
-    if getattr(config, "weighted_col", None) is not None:
-        sampler_train = CappedSampler(
-            dataframe=dataset_train.df,
-            stratify_col=config.weighted_col,       
-            shuffle=True,
-            seed=config.data_sampling_seed,
-            log=True,
-            max_samples_per_group= getattr(config, "max_samples_per_group", None)
-        )
-    else:
-        sampler_train = FixedSizeRandomSampler(
+    sampler_train = FixedSizeRandomSampler(
         dataset=dataset_train,
         num_samples= len(dataset_train),     #28428,  # match capped sampler
         seed=config.data_sampling_seed,
         shuffle=True,
         log=True
-        )
+    )
+        
         # sampler_train = RandomSampler(dataset_train, replacement=False)
 
     sampler_val = SequentialSampler(dataset_val)
