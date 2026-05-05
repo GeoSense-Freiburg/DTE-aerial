@@ -1,4 +1,6 @@
+
 # deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection
+
 
 This repository is the official implementation of [deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection](Arxiv link will be shared soon). 
 
@@ -78,4 +80,5 @@ Pre-trained Models will be available soon
 
 ## Citation
 
-Will be available soon. 
+License will be available soon. 
+
