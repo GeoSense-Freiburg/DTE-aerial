@@ -18,9 +18,7 @@ pip install -r requirements.txt
 
 ```
 ## Download Dataset
-
-The DeadTrees.Earth-Aerial dataset will be publicly released soon.  
-Additional details regarding dataset access, licensing, and download instructions will be provided upon release.
+Additional details regarding dataset access and download instructions will be provided upon public release.
 
 ## Training
 
