@@ -24,8 +24,6 @@ Additional details regarding dataset access, licensing, and download instruction
 
 ## Training
 
-## 🚀 Training
-
 To train the models described in the paper:
 
 1. Prepare a configuration file (see [`config/`](./config/)) by specifying the path to the dataset.
