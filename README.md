@@ -1,6 +1,5 @@
 # deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection
 [![arXiv](https://img.shields.io/badge/arXiv-2511.06943-b31b1b.svg)](https://arxiv.org/abs/2605.19605)
-![GitHub License](https://img.shields.io/github/license/utn-air/flownav?label=License&color=%23e11d48&cacheSeconds=60)
 
 
 
