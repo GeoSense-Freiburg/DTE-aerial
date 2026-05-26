@@ -1,4 +1,3 @@
-
 # deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection
 
 
@@ -79,6 +78,13 @@ Pre-trained Models will be available soon
 
 
 ## Citation
+```bibtex
+@article{sharma2026deadtrees,
+  title={deadtrees. earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection},
+  author={Sharma, Ayushi and Mosig, Clemens and Drees, Lukas and Soltani, Salim and Vajna-Jehle, Janusch and Sheppard, Aaron and Ahmadi, Belqis and Schmid, Jonathan and Neumeier, Paul and Jacobs, Nathan and others},
+  journal={arXiv preprint arXiv:2605.19605},
+  year={2026}
+}
+```
 
-License will be available soon. 
 
