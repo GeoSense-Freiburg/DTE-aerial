@@ -18,7 +18,9 @@ pip install -r requirements.txt
 
 ```
 ## Download Dataset
-We will make our dataset public soon.
+
+The DeadTrees.Earth-Aerial dataset will be publicly released soon.  
+Additional details regarding dataset access, licensing, and download instructions will be provided upon release.
 
 ## Training
 
@@ -46,7 +48,7 @@ python eval.py --checkpoint <pretrained_model.pth> --cfg <./config/<config file>
 
 ## Pre-trained Models
 
-Pre-trained Models will be available soon
+Pre-trained Models will be available upon release
 
 ## Results
 
