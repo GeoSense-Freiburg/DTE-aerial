@@ -69,9 +69,11 @@ rm dataverse_files.zip
 ---
 
 ## Evaluation
+```bash
 update <input_dir> in ./config/evaluation.yml
 
 python evaluation.py --cfg ./config/evaluation.yml --checkpoint <PATH_TO_CHECKPOINT>
+```
 
 ## Repository Structure
 
