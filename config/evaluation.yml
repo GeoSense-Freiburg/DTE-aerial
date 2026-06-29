@@ -1,0 +1,13 @@
+_base_: 'base_segformer.yml'
+data:
+  batch_size: 2 #single process batch size for training
+  inference_batch_size: 2 #single process batch size for inference
+  
+  input_dir: <input_dir>
+  meta:
+    test: ${data.input_dir}/DTE-aerial-bench-meta.csv
+
+model:
+  weights: nvidia/segformer-b3-finetuned-ade-512-512
+  type: Segformer
+
