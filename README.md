@@ -19,6 +19,24 @@ pip install -r requirements.txt
 ## Download Dataset
 Additional details regarding dataset access and download instructions will be provided upon public release.
 
+## Repository Structure
+```text
+DTE-Aerial/
+├── train.py                 # Main training entry point
+├── eval.py                  # Main evaluation entry point
+├── requirements.txt         # Python dependencies
+├── README.md                # Project documentation
+│
+├── config/                  # Configuration files
+│
+└── src/                     # Source code
+    ├── dataset/             # Dataset loading and preprocessing
+    ├── loss/                # Loss functions
+    ├── model/               # Model architectures
+    └── utils/               # Utility functions
+```
+
+
 ## Training
 
 To train the models described in the paper:
