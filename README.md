@@ -1,6 +1,8 @@
-# deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection
-[![arXiv](https://img.shields.io/badge/arXiv-2511.06943-b31b1b.svg)](https://arxiv.org/abs/2605.19605)
 
+# deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection
+
+
+This repository is the official implementation of [deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection](Arxiv link will be shared soon). 
 
 
 ## Setup
@@ -16,28 +18,87 @@ pip install -r requirements.txt
 
 
 ```
-## Download Dataset
-Additional details regarding dataset access and download instructions will be provided upon public release.
+---
+
+## Download Benchmark Dataset
+
+The benchmark dataset will be made publicly available upon release. Until then, reviewers can download it using a Harvard Dataverse API token.
+
+```bash
+curl -L -OJ \
+-H "X-Dataverse-key: <YOUR_DATAVERSE_API_KEY>" \
+"https://dataverse.harvard.edu/api/access/dataset/:persistentId/?persistentId=doi:10.7910/DVN/IYCUML"
+
+unzip dataverse_files.zip
+
+tar -xvf DTE-aerial-bench-tiles.tar
+tar -xvf DTE-aerial-bench-masks.tar
+
+rm dataverse_files.zip
+rm DTE-aerial-bench-tiles.tar
+rm DTE-aerial-bench-masks.tar
+```
+
+After extraction, the dataset should have the following structure:
+
+```text
+DTE-Aerial-Data/
+├── DTE-aerial-bench-meta.csv
+├── tiles/
+└── masks/
+```
+
+---
+
+
+---
+
+## Download Pre-trained Model
+
+Download the released model checkpoint:
+
+```bash
+curl -L -OJ \
+-H "X-Dataverse-key: <YOUR_DATAVERSE_API_KEY>" \
+"https://dataverse.harvard.edu/api/access/dataset/:persistentId/?persistentId=doi:10.7910/DVN/NXOZ06"
+
+unzip dataverse_files.zip
+rm dataverse_files.zip
+```
+
+---
+
+## Evaluation
+update <input_dir> in ./config/evaluation.yml
+
+python evaluation.py --cfg ./config/evaluation.yml --checkpoint <PATH_TO_CHECKPOINT>
 
 ## Repository Structure
+
 ```text
-DTE-Aerial/
-├── train.py                 # Main training entry point
-├── eval.py                  # Main evaluation entry point
-├── requirements.txt         # Python dependencies
-├── README.md                # Project documentation
+DTE-aerial/
+├── train.py                 # Training entry point
+├── evaluation.py            # Evaluation entry point
+├── requirements.txt
+├── README.md
 │
-├── config/                  # Configuration files
+├── config/
+│   ├── train.yml
+│   └── evaluation.yml
 │
-└── src/                     # Source code
-    ├── dataset/             # Dataset loading and preprocessing
+├── scripts/
+│   └── data_download.py
+│
+└── src/
+    ├── dataset/             # Dataset loading
+    ├── model/               # Network architectures
     ├── loss/                # Loss functions
-    ├── model/               # Model architectures
-    └── utils/               # Utility functions
+    └── utils/               # Utilities
 ```
 
 
 ## Training
+
 
 To train the models described in the paper:
 
@@ -49,19 +110,11 @@ python train.py --cfg ./config/<config_file>.yaml --output <output_path>
 ```
 
 
-## Evaluation
-
-To evaluate the model, run:
-
-```eval
-python eval.py --checkpoint <pretrained_model.pth> --cfg <./config/<config file>> --output <output_path>
-```
-
 
 
 ## Pre-trained Models
 
-Pre-trained Models will be available upon release
+Pre-trained Models will be available soon
 
 ## Results
 
@@ -93,13 +146,14 @@ Pre-trained Models will be available upon release
 
 
 ## Citation
-```bibtex
-@article{sharma2026deadtrees,
-  title={deadtrees. earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection},
-  author={Sharma, Ayushi and Mosig, Clemens and Drees, Lukas and Soltani, Salim and Vajna-Jehle, Janusch and Sheppard, Aaron and Ahmadi, Belqis and Schmid, Jonathan and Neumeier, Paul and Jacobs, Nathan and others},
-  journal={arXiv preprint arXiv:2605.19605},
-  year={2026}
-}
-```
 
+@misc{sharma2026deadtreesearthaerialmultiresolutionaerialimage,
+      title={deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection}, 
+      author={Ayushi Sharma and Clemens Mosig and Lukas Drees and Salim Soltani and Janusch Vajna-Jehle and Aaron Sheppard and Belqis Ahmadi and Jonathan Schmid and Paul Neumeier and Nathan Jacobs and Jan Dirk Wegner and Teja Kattenborn},
+      year={2026},
+      eprint={2605.19605},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.19605}, 
+}
 
