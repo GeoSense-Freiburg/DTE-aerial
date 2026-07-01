@@ -116,7 +116,7 @@ python train.py --cfg ./config/<config_file>.yaml --output <output_path>
 
 ## Pre-trained Models
 
-Pre-trained Models will be available soon
+All pre-trained models will be available soon
 
 ## Results
 
