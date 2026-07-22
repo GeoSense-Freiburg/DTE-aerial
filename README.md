@@ -148,14 +148,12 @@ All pre-trained models will be available soon
 
 
 ## Citation
-
-@misc{sharma2026deadtreesearthaerialmultiresolutionaerialimage,
-      title={deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection}, 
-      author={Ayushi Sharma and Clemens Mosig and Lukas Drees and Salim Soltani and Janusch Vajna-Jehle and Aaron Sheppard and Belqis Ahmadi and Jonathan Schmid and Paul Neumeier and Nathan Jacobs and Jan Dirk Wegner and Teja Kattenborn},
-      year={2026},
-      eprint={2605.19605},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2605.19605}, 
+```bibtex
+@article{sharma2026deadtrees,
+  title={deadtrees. earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection},
+  author={Sharma, Ayushi and Mosig, Clemens and Drees, Lukas and Soltani, Salim and Vajna-Jehle, Janusch and Sheppard, Aaron and Ahmadi, Belqis and Schmid, Jonathan and Neumeier, Paul and Jacobs, Nathan and others},
+  journal={arXiv preprint arXiv:2605.19605},
+  year={2026}
 }
+```
 
