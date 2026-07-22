@@ -55,17 +55,20 @@ DTE-Aerial-Data/
 
 ## Download Pre-trained Model
 
-Download the released model checkpoint:
+Download the pretrained model from Hugging Face:
 
-```bash
-curl -L -OJ \
--H "X-Dataverse-key: <YOUR_DATAVERSE_API_KEY>" \
-"https://dataverse.harvard.edu/api/access/dataset/:persistentId/?persistentId=doi:10.7910/DVN/NXOZ06"
+```python
+from huggingface_hub import snapshot_download
 
-unzip dataverse_files.zip
-rm dataverse_files.zip
+snapshot_download(
+    repo_id="ayushi3536/DTE-aerial-model",
+    local_dir="DTE-aerial-model",
+)
 ```
 
+Alternatively, you can browse and download the files manually from:
+
+https://huggingface.co/ayushi3536/DTE-aerial-model
 ---
 
 ## Evaluation
