@@ -47,15 +47,13 @@ DTE-Aerial-Data/
 ├── tiles/
 └── masks/
 ```
-
----
-
-
 ---
 
 ## Download Pre-trained Model
 
-Download the pretrained model from Hugging Face:
+The pretrained model is available on Hugging Face: [DTE-aerial-model](https://huggingface.co/ayushi3536/DTE-aerial-model).
+
+You can either download it programmatically using the Hugging Face Hub:
 
 ```python
 from huggingface_hub import snapshot_download
@@ -66,12 +64,13 @@ snapshot_download(
 )
 ```
 
-Alternatively, Download the pretrained model checkpoint from [DTE-aerial-model](https://huggingface.co/ayushi3536/DTE-aerial-model).
+or clone the repository with Git LFS:
 
 ```bash
 git lfs install
 git clone https://huggingface.co/ayushi3536/DTE-aerial-model
 ```
+
 ---
 
 ## Evaluation
