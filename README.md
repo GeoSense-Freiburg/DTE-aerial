@@ -66,9 +66,12 @@ snapshot_download(
 )
 ```
 
-Alternatively, you can browse and download the files manually from:
+Alternatively, Download the pretrained model checkpoint from [DTE-aerial-model](https://huggingface.co/ayushi3536/DTE-aerial-model).
 
-https://huggingface.co/ayushi3536/DTE-aerial-model
+```bash
+git lfs install
+git clone https://huggingface.co/ayushi3536/DTE-aerial-model
+```
 ---
 
 ## Evaluation
