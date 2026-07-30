@@ -21,9 +21,9 @@ pyyaml
 
 tqdm
 matplotlib
-transformers
+transformers==5.2
 wandb
 safetensors
 termcolor
-segmentation-models-pytorch
+segmentation-models-pytorch==0.3
 pyarrow
