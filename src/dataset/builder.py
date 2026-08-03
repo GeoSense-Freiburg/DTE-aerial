@@ -7,6 +7,7 @@ from .dataset import DeadwoodDataset
 from .random_sampler import FixedSizeRandomSampler
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
+from .inference_dataset import GeoTIFFInferenceDataset
 
 def worker_init_fn(worker_id):
     worker_seed = torch.initial_seed() % 2**32
@@ -36,7 +37,16 @@ def collate_fn(batch):
         'idx': [b["idx"] for b in batch]
     }
 
+def inference_collate_fn(batch):
 
+    images = torch.stack([b["image"] for b in batch])
+
+    return {
+        "image": images,
+        "x": [b["x"] for b in batch],
+        "y": [b["y"] for b in batch],
+    }
+    
 def _parse_dataset(meta):
     '''Parse train/val CSVs into dataframes.
        Expects meta.train and meta.test to be paths to CSV files with columns 'id',
@@ -166,3 +176,35 @@ def build_loader_inference(config):
     
     return data_loader_val
 
+
+
+
+def build_loader_geotiff(
+    image_path,
+    batch_size=4,
+    tile_size=1024,
+    padding=256,
+    num_workers=4,
+):
+
+    dataset = GeoTIFFInferenceDataset(
+        image_path=image_path,
+        tile_size=tile_size,
+        padding=padding,
+    )
+
+    sampler = SequentialSampler(dataset)
+
+    loader = DataLoader(
+        dataset,
+        sampler=sampler,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+        pin_memory=True,
+        persistent_workers=num_workers > 0,
+        collate_fn=inference_collate_fn,
+        drop_last=False,
+    )
+
+    return dataset, loader
