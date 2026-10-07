@@ -2,7 +2,11 @@
 # deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection
 
 
-This repository is the official implementation of [deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection](Arxiv link will be shared soon). 
+This repository is the official implementation of [deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection](https://arxiv.org/abs/2605.19605).
+
+**Data:** [DTE-aerial-train (CC BY)](https://huggingface.co/datasets/ayushi3536/deadtree.earth-aerial-train_cc_by) · [DTE-aerial-train (CC BY-NC-SA)](https://huggingface.co/datasets/ayushi3536/deadtree.earth-aerial-train_cc_by_nc-sa) · [DTE-aerial-bench](https://deadtrees.earth/releases/dte-aerial-bench) · **Model:** [DTE-aerial-model](https://huggingface.co/ayushi3536/DTE-aerial-model) · **Project page:** [deadtrees_aerial.github.io](https://ayushi-3536.github.io/deadtrees_aerial.github.io/)
+
+If you use the data, models or code, please cite the paper (see [Citation](#citation)).
 
 
 ## Setup
@@ -20,26 +24,30 @@ pip install -r requirements.txt
 ```
 ---
 
-## Download Benchmark Dataset
+## Download the Training Data
 
-The benchmark dataset will be made publicly available upon release. Until then, reviewers can download it using a Harvard Dataverse API token.
+DTE-aerial-train is hosted on Hugging Face in two repositories, split by licence. The training set used in the paper is the union of both.
 
-```bash
-curl -L -OJ \
--H "X-Dataverse-key: <YOUR_DATAVERSE_API_KEY>" \
-"https://dataverse.harvard.edu/api/access/dataset/:persistentId/?persistentId=doi:10.7910/DVN/IYCUML"
+| Repository | Licence | Content |
+|---|---|---|
+| [`ayushi3536/deadtree.earth-aerial-train_cc_by`](https://huggingface.co/datasets/ayushi3536/deadtree.earth-aerial-train_cc_by) | CC BY 4.0 (+ 353 MIT patches) | 308,651 training and 34,885 validation patches |
+| [`ayushi3536/deadtree.earth-aerial-train_cc_by_nc-sa`](https://huggingface.co/datasets/ayushi3536/deadtree.earth-aerial-train_cc_by_nc-sa) | CC BY-NC-SA 4.0 | 2,090 training patches (5 orthophotos), non-commercial only |
 
-unzip dataverse_files.zip
+The CC BY repository is stored as WebDataset shards organised by biome and resolution (`data/<split>/<biome_group>/<resolution>/`), so subsets can be downloaded selectively:
 
-tar -xvf DTE-aerial-bench-tiles.tar
-tar -xvf DTE-aerial-bench-masks.tar
+```python
+from huggingface_hub import snapshot_download
 
-rm dataverse_files.zip
-rm DTE-aerial-bench-tiles.tar
-rm DTE-aerial-bench-masks.tar
+# metadata for all patches, plus all boreal training shards
+snapshot_download("ayushi3536/deadtree.earth-aerial-train_cc_by", repo_type="dataset",
+                  allow_patterns=["metadata/*", "data/train/boreal/*"])
 ```
 
-After extraction, the dataset should have the following structure:
+See the dataset card for streaming with `datasets`, selecting patches by metadata, and reading GeoTIFF patches and masks.
+
+## Download Benchmark Dataset
+
+The benchmark (DTE-aerial-bench: 525 expert-annotated patches from 25 sites at 5, 10 and 20 cm) is available from the [release page](https://deadtrees.earth/releases/dte-aerial-bench). After downloading and extracting it, the folder should have the following structure:
 
 ```text
 DTE-Aerial-Data/
@@ -125,40 +133,21 @@ All pre-trained models will be available soon
 
 ## Results
 
-
-### Tree Mortality Segmentation (F1)
-
-| Model                                             | Temp     | Trop | Boreal   | Drylands | 5cm      | 10cm     | 20cm     |
-| ------------------------------------------------- | -------- | ---- | -------- | -------- | -------- | -------- | -------- |
-| [DT-V1](https://restor-foundation.github.io/tcd/) | 0.50     | 0.61 | 0.40     | 0.55     | 0.54     | 0.47     | 0.38     |
-| **MiT-B3**                                        | **0.56** | 0.64 | **0.58** | 0.56     | **0.59** | **0.55** | **0.45** |
-| MiT-B1                                            | 0.54     | 0.65 | 0.57     | 0.57     | 0.58     | 0.53     | 0.42     |
-| U-Net (ResNet34)                                  | 0.52     | 0.63 | 0.53     | **0.59** | 0.57     | 0.52     | 0.42     |
-| M2F (Small)                                       | 0.52     | 0.65 | 0.57     | 0.58     | 0.58     | 0.54     | 0.44     |
-| DeepLabV3+ (R50)                                  | 0.50     | 0.63 | 0.54     | 0.56     | 0.56     | 0.49     | 0.40     |
-| DINOv2 (Base)                                     | 0.40     | 0.61 | 0.42     | 0.54     | 0.48     | 0.46     | 0.38     |
-
-### Tree Cover Segmentation (F1)
-
-| Model                                               | Temp     | Trop     | Boreal   | Drylands | 5cm      | 10cm     | 20cm     |
-| --------------------------------------------------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| [OAM-TCD](https://restor-foundation.github.io/tcd/) | **0.86** | **0.91** | 0.88     | 0.86     | 0.88     | **0.89** | 0.87     |
-| **MiT-B3**                                          | 0.85     | **0.91** | **0.93** | **0.93** | **0.89** | **0.89** | **0.89** |
-| MiT-B1                                              | 0.85     | **0.91** | **0.93** | 0.92     | **0.89** | **0.89** | 0.88     |
-| U-Net (ResNet34)                                    | 0.85     | **0.91** | 0.92     | 0.92     | **0.89** | **0.89** | 0.88     |
-| M2F (Small)                                         | 0.85     | **0.91** | **0.93** | 0.92     | **0.89** | **0.89** | 0.88     |
-| DeepLabV3+ (R50)                                    | 0.84     | **0.91** | **0.93** | 0.92     | **0.89** | **0.89** | 0.87     |
-| DINOv2 (Base)                                       | 0.84     | **0.91** | 0.87     | 0.89     | 0.87     | 0.87     | 0.84     |
-
+Benchmark results for all models (by biome, resolution and class) are reported in the [paper](https://arxiv.org/abs/2605.19605).
 
 
 ## Citation
+
+If you use DTE-aerial, please cite:
+
 ```bibtex
-@article{sharma2026deadtrees,
-  title={deadtrees. earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection},
-  author={Sharma, Ayushi and Mosig, Clemens and Drees, Lukas and Soltani, Salim and Vajna-Jehle, Janusch and Sheppard, Aaron and Ahmadi, Belqis and Schmid, Jonathan and Neumeier, Paul and Jacobs, Nathan and others},
-  journal={arXiv preprint arXiv:2605.19605},
-  year={2026}
+@misc{sharma2026deadtreesearthaerialmultiresolutionaerialimage,
+      title={deadtrees.earth-aerial: A Multi-Resolution Aerial Image Dataset for Tree Cover and Mortality Detection},
+      author={Ayushi Sharma and Clemens Mosig and Lukas Drees and Salim Soltani and Janusch Vajna-Jehle and Aaron Sheppard and Belqis Ahmadi and Jonathan Schmid and Paul Neumeier and Nathan Jacobs and Jan Dirk Wegner and Teja Kattenborn},
+      year={2026},
+      eprint={2605.19605},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.19605},
 }
 ```
-
