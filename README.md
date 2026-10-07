@@ -43,7 +43,7 @@ snapshot_download("ayushi3536/deadtree.earth-aerial-train_cc_by", repo_type="dat
                   allow_patterns=["metadata/*", "data/train/boreal/*"])
 ```
 
-See the dataset card for streaming with `datasets`, selecting patches by metadata, and reading GeoTIFF patches and masks. `notebooks/data_analysis/explore_dte_aerial_metadata.ipynb` explores the metadata.
+See the dataset card for streaming with `datasets`, selecting patches by metadata, and reading GeoTIFF patches and masks.
 
 ## Download Benchmark Dataset
 
@@ -133,31 +133,7 @@ All pre-trained models will be available soon
 
 ## Results
 
-
-### Tree Mortality Segmentation (F1)
-
-| Model                                             | Temp     | Trop | Boreal   | Drylands | 5cm      | 10cm     | 20cm     |
-| ------------------------------------------------- | -------- | ---- | -------- | -------- | -------- | -------- | -------- |
-| [DT-V1](https://restor-foundation.github.io/tcd/) | 0.50     | 0.61 | 0.40     | 0.55     | 0.54     | 0.47     | 0.38     |
-| **MiT-B3**                                        | **0.56** | 0.64 | **0.58** | 0.56     | **0.59** | **0.55** | **0.45** |
-| MiT-B1                                            | 0.54     | 0.65 | 0.57     | 0.57     | 0.58     | 0.53     | 0.42     |
-| U-Net (ResNet34)                                  | 0.52     | 0.63 | 0.53     | **0.59** | 0.57     | 0.52     | 0.42     |
-| M2F (Small)                                       | 0.52     | 0.65 | 0.57     | 0.58     | 0.58     | 0.54     | 0.44     |
-| DeepLabV3+ (R50)                                  | 0.50     | 0.63 | 0.54     | 0.56     | 0.56     | 0.49     | 0.40     |
-| DINOv2 (Base)                                     | 0.40     | 0.61 | 0.42     | 0.54     | 0.48     | 0.46     | 0.38     |
-
-### Tree Cover Segmentation (F1)
-
-| Model                                               | Temp     | Trop     | Boreal   | Drylands | 5cm      | 10cm     | 20cm     |
-| --------------------------------------------------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| [OAM-TCD](https://restor-foundation.github.io/tcd/) | **0.86** | **0.91** | 0.88     | 0.86     | 0.88     | **0.89** | 0.87     |
-| **MiT-B3**                                          | 0.85     | **0.91** | **0.93** | **0.93** | **0.89** | **0.89** | **0.89** |
-| MiT-B1                                              | 0.85     | **0.91** | **0.93** | 0.92     | **0.89** | **0.89** | 0.88     |
-| U-Net (ResNet34)                                    | 0.85     | **0.91** | 0.92     | 0.92     | **0.89** | **0.89** | 0.88     |
-| M2F (Small)                                         | 0.85     | **0.91** | **0.93** | 0.92     | **0.89** | **0.89** | 0.88     |
-| DeepLabV3+ (R50)                                    | 0.84     | **0.91** | **0.93** | 0.92     | **0.89** | **0.89** | 0.87     |
-| DINOv2 (Base)                                       | 0.84     | **0.91** | 0.87     | 0.89     | 0.87     | 0.87     | 0.84     |
-
+Benchmark results for all models (by biome, resolution and class) are reported in the [paper](https://arxiv.org/abs/2605.19605).
 
 
 ## Citation
