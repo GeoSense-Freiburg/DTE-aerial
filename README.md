@@ -5,7 +5,7 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2605.19605-b31b1b.svg)](https://arxiv.org/abs/2605.19605)
 [![Project page](https://img.shields.io/badge/Project_page-deadtrees__aerial-2E7D32.svg)](https://ayushi-3536.github.io/deadtrees_aerial.github.io/)
-[![Visualization](https://img.shields.io/badge/Visualization-DTE--aerial--bench-1565C0.svg)](https://deadtrees.earth/benchmark-datasets/dte-aerial-bench)
+[![Visualization](https://img.shields.io/badge/Visualization-DTE--aerial--bench-1565C0.svg)](https://deadtrees.earth/releases/dte-aerial-bench)
 [![Dataset](https://img.shields.io/badge/Dataset-Hugging_Face-FFD21E?logo=huggingface&logoColor=black)](https://huggingface.co/datasets/ayushi3536/deadtree.earth-aerial-train_cc_by)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 
@@ -35,13 +35,20 @@ pip install -r requirements.txt
 
 ## Download Benchmark Dataset
 
-The benchmark (DTE-aerial-bench: 525 expert-annotated patches from 25 sites at 5, 10 and 20 cm) is available from the [release page](https://deadtrees.earth/releases/dte-aerial-bench). After downloading and extracting it, the folder should have the following structure:
+The benchmark (DTE-aerial-bench: 525 expert-annotated patches from 25 sites at 5, 10 and 20 cm) is available from the [release page](https://deadtrees.earth/releases/dte-aerial-bench). After downloading, extract the two archives inside the `DTE-aerial-bench` folder:
+
+```bash
+tar -xf DTE-aerial-bench-tiles.tar
+tar -xf DTE-aerial-bench-masks.tar
+```
+
+The folder should then have the following structure:
 
 ```text
-DTE-Aerial-Data/
+DTE-aerial-bench/
 ├── DTE-aerial-bench-meta.csv
-├── tiles/
-└── masks/
+├── tiles/<site>/<name>.png
+└── masks/<site>/<name>_mask.png
 ```
 ---
 
@@ -92,9 +99,8 @@ git clone https://huggingface.co/ayushi3536/DTE-aerial-model
 
 ## Evaluation
 ```bash
-update <input_dir> in ./config/evaluation.yml
-
-python evaluation.py --cfg ./config/evaluation.yml --checkpoint <PATH_TO_CHECKPOINT>
+# set data.input_dir in config/evaluation.yml to the DTE-aerial-bench folder
+python eval.py --cfg config/evaluation.yml --checkpoint <PATH_TO_CHECKPOINT>
 ```
 
 ## Repository Structure
@@ -102,7 +108,7 @@ python evaluation.py --cfg ./config/evaluation.yml --checkpoint <PATH_TO_CHECKPO
 ```text
 DTE-aerial/
 ├── train.py                 # Training entry point
-├── evaluation.py            # Evaluation entry point
+├── eval.py                  # Evaluation entry point
 ├── requirements.txt
 ├── README.md
 │
@@ -157,6 +163,7 @@ If you use DTE-aerial, please cite:
       eprint={2605.19605},
       archivePrefix={arXiv},
       primaryClass={cs.CV},
+      doi={10.48550/arXiv.2605.19605},
       url={https://arxiv.org/abs/2605.19605},
 }
 ```
