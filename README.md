@@ -22,7 +22,8 @@ If you use the data, models or code, please cite the paper (see [Citation](#cita
 
 ```
 # Clone the repository
-git clone github.com/GeoSense-Freiburg/DTE-aerial
+git clone https://github.com/GeoSense-Freiburg/DTE-aerial
+cd DTE-aerial
 
 # Install and activate the conda environment
 conda create -n dte python=3.10
@@ -35,7 +36,7 @@ pip install -r requirements.txt
 
 ## Download Benchmark Dataset
 
-The benchmark (DTE-aerial-bench: 525 expert-annotated patches from 25 sites at 5, 10 and 20 cm) is available from the [release page](https://deadtrees.earth/releases/dte-aerial-bench). After downloading, extract the two archives inside the `DTE-aerial-bench` folder:
+The benchmark (DTE-aerial-bench: 525 expert-annotated patches from 25 sites at 5, 10 and 20 cm) is available on [Harvard Dataverse](https://dataverse.harvard.edu/previewurl.xhtml?token=ec244fbb-5e58-4a77-a759-020c61859493); the deadtrees.earth release page (coming soon) already hosts an [interactive viewer](https://deadtrees.earth/releases/dte-aerial-bench). After downloading, extract the two archives inside the `DTE-aerial-bench` folder:
 
 ```bash
 tar -xf DTE-aerial-bench-tiles.tar
@@ -75,9 +76,15 @@ See the dataset card for streaming with `datasets`, selecting patches by metadat
 
 ## Download Pre-trained Model
 
-The pretrained model is available on Hugging Face: [DTE-aerial-model](https://huggingface.co/ayushi3536/DTE-aerial-model).
+The pretrained model (MiT-B3, the paper's main model) is available on Hugging Face: [DTE-aerial-model](https://huggingface.co/ayushi3536/DTE-aerial-model). The weights are in `DTE_aerial_model.safetensors`.
 
-You can either download it programmatically using the Hugging Face Hub:
+Download it from the command line:
+
+```bash
+huggingface-cli download ayushi3536/DTE-aerial-model --local-dir DTE-aerial-model
+```
+
+or with the Hugging Face Hub in Python:
 
 ```python
 from huggingface_hub import snapshot_download
@@ -100,7 +107,7 @@ git clone https://huggingface.co/ayushi3536/DTE-aerial-model
 ## Evaluation
 ```bash
 # set data.input_dir in config/evaluation.yml to the DTE-aerial-bench folder
-python eval.py --cfg config/evaluation.yml --checkpoint <PATH_TO_CHECKPOINT>
+python eval.py --cfg config/evaluation.yml --checkpoint DTE-aerial-model/DTE_aerial_model.safetensors
 ```
 
 ## Repository Structure
@@ -113,11 +120,12 @@ DTE-aerial/
 ├── README.md
 │
 ├── config/
-│   ├── train.yml
-│   └── evaluation.yml
+│   ├── base.yml             # Shared training settings (data paths, schedule)
+│   ├── <model>.yml          # One config per model in the paper (e.g. mitb3.yml)
+│   └── evaluation.yml       # Benchmark evaluation
 │
-├── scripts/
-│   └── data_download.py
+├── notebooks/
+│   └── data_sanity/         # Train/benchmark split checks
 │
 └── src/
     ├── dataset/             # Dataset loading
@@ -136,15 +144,8 @@ To train the models described in the paper:
 2. Run the following command:
 
 ```bash
-python train.py --cfg ./config/<config_file>.yaml --output <output_path>
+python train.py --cfg ./config/<config_file>.yml --output <output_path>
 ```
-
-
-
-
-## Pre-trained Models
-
-All pre-trained models will be available soon
 
 ## Results
 
