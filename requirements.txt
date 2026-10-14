@@ -27,3 +27,4 @@ safetensors
 termcolor
 segmentation-models-pytorch
 pyarrow
+huggingface_hub
