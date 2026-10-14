@@ -43,12 +43,12 @@ def parse_args():
      - --wandb: flag to enable W&B logging
     '''
     
-    parser = argparse.ArgumentParser('PANOPS training and evaluation script')
+    parser = argparse.ArgumentParser('DTE-aerial training script')
     parser.add_argument('--cfg', type=str, required=True, help='path to config file')
     parser.add_argument('--opts', help="Modify config options by adding 'KEY=VALUE' list. ", default=None, nargs='+')
     parser.add_argument('--batch-size', type=int, help='batch size for single GPU')
     parser.add_argument('--seed', type=int, default=0, help='random seed for initialization')
-    parser.add_argument('--output',default='/home/as2114/code/benchmark_deadtree/output/resnet34',type=str, help='root of output folder')
+    parser.add_argument('--output',default='output',type=str, help='root of output folder')
     parser.add_argument('--tag', type=str, help='tag of experiment')
     parser.add_argument('--wandb', action='store_true', help='Use W&B to log experiments')
     return parser.parse_args()
