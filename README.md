@@ -36,7 +36,15 @@ pip install -r requirements.txt
 
 ## Download Benchmark Dataset
 
-The benchmark (DTE-aerial-bench: 525 expert-annotated patches from 25 sites at 5, 10 and 20 cm) is available on [Harvard Dataverse](https://dataverse.harvard.edu/previewurl.xhtml?token=ec244fbb-5e58-4a77-a759-020c61859493); the deadtrees.earth release page (coming soon) already hosts an [interactive viewer](https://deadtrees.earth/releases/dte-aerial-bench). After downloading, extract the two archives inside the `DTE-aerial-bench` folder:
+The benchmark (DTE-aerial-bench: 525 expert-annotated patches from 25 sites at 5, 10 and 20 cm) is available on Hugging Face: [`ayushi3536/deadtree.earth-aerial-bench`](https://huggingface.co/datasets/ayushi3536/deadtree.earth-aerial-bench). All patches can also be browsed in the [interactive viewer](https://deadtrees.earth/releases/dte-aerial-bench) on deadtrees.earth.
+
+```bash
+huggingface-cli download ayushi3536/deadtree.earth-aerial-bench --repo-type dataset \
+    --include "DTE-aerial-bench-*" SHA256SUMS --local-dir DTE-aerial-bench
+cd DTE-aerial-bench && sha256sum -c SHA256SUMS --ignore-missing
+```
+
+Then extract the two archives inside the `DTE-aerial-bench` folder:
 
 ```bash
 tar -xf DTE-aerial-bench-tiles.tar
@@ -105,6 +113,17 @@ git clone https://huggingface.co/ayushi3536/DTE-aerial-model
 ---
 
 ## Evaluation
+
+**One command:** `reproduce_benchmark.py` downloads DTE-aerial-bench and the released model from Hugging Face, verifies the checksums, runs the evaluation and compares the macro F1 (overall, per resolution and per biome) with the released model's results:
+
+```bash
+python reproduce_benchmark.py --work-dir reproduce
+```
+
+It needs one GPU and about 2 GB of disk space. On clusters without internet access on the compute nodes, run `--download-only` on a login node first and `--skip-download` on the GPU node. The released model is the seed-200 run of MiT-B3; the paper's tables report the mean over three seeds, so the overall numbers differ slightly (e.g. mortality F1 0.598 vs. 0.59).
+
+**Manually:**
+
 ```bash
 # set data.input_dir in config/evaluation.yml to the DTE-aerial-bench folder
 python eval.py --cfg config/evaluation.yml --checkpoint DTE-aerial-model/DTE_aerial_model.safetensors
@@ -116,6 +135,7 @@ python eval.py --cfg config/evaluation.yml --checkpoint DTE-aerial-model/DTE_aer
 DTE-aerial/
 ├── train.py                 # Training entry point
 ├── eval.py                  # Evaluation entry point
+├── reproduce_benchmark.py   # Download data + model, evaluate, compare with the released results
 ├── requirements.txt
 ├── README.md
 │
